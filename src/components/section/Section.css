@@ -1,0 +1,12 @@
+.section{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 30px;
+}
+
+.section a{
+    color: #333;
+    margin-right: 10px;
+    transition: color 0.3s ease;
+}

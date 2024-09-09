@@ -1,0 +1,35 @@
+/* This is the container element  */
+.container {
+  width: 100%;
+  max-width: 1140px; /* Default max-width for Bootstrap’s large container */
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 576px) {
+  .container {
+    max-width: 540px; /* Extra small screens */
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px; /* Small screens */
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 960px; /* Medium screens */
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px; /* Large screens */
+  }
+}
+
+
