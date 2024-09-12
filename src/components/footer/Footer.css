@@ -1,0 +1,106 @@
+
+footer {
+  background-color: rgb(46, 46, 46);
+  color: #eeeeee;
+  font-size: 16px;
+  position: absolute; /* Remove from normal document flow */
+  left: 0; /* Align to the left edge of the viewport */
+  right: 0; /* Align to the right edge of the viewport */
+  width: 100%; /* Ensure it spans the entire width */
+  margin-top: 45px;
+}
+footer * {
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+}
+footer .row {
+  padding: 1em 1em;
+}
+footer .row.primary {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 2fr;
+  align-items: stretch;
+}
+footer .column {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0 2em;
+  min-height: 15em;
+}
+footer h3 {
+  width: 100%;
+  text-align:right;
+  color: white;
+  font-size: 1.4em;
+  white-space: nowrap;
+}
+footer ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+}
+footer li:not(:first-child) {
+  margin-top: 0.8em;
+}
+footer ul li a {
+  color: #a7a7a7;
+  text-decoration: none;
+}
+footer ul li a:hover {
+  color: #ffc107;
+}
+footer .about p {
+  text-align: justify;
+  line-height: 2;
+  margin: 0;
+}
+footer input,
+footer button {
+  font-size: 1em;
+  padding: 1em;
+  width: 100%;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+footer button {
+  background-color: #ffc107;
+  color: #ffffff;
+}
+footer div.social {
+  display: flex;
+  justify-content: space-around;
+  font-size: 2.4em;
+  flex-direction: row;
+  margin-top: 0.5em;
+}
+footer .social i {
+  color: #bac6d9;
+}
+
+footer .copyright {
+  padding: 0.3em 1em;
+  text-align: center;
+}
+footer .social i:hover{
+  color: #ffc107;
+}
+footer .footer-menu{
+  float: left;
+    margin-top: 10px;
+}
+
+footer .copyright p {
+  font-size: 0.9em;
+  text-align: center;
+}
+@media screen and (max-width: 850px) {
+  footer .row.primary {
+    grid-template-columns: 1fr;
+  }
+
+}

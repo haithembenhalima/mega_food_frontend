@@ -14,7 +14,7 @@
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 768px) {cd
   .container {
     max-width: 720px; /* Small screens */
   }
