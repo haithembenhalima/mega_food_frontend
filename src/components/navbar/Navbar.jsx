@@ -1,15 +1,15 @@
-import React from 'react';
+import React from "react";
 import { IconField } from "primereact/iconfield";
 import { InputIcon } from "primereact/inputicon";
 import { InputText } from "primereact/inputtext";
-import {Button } from "primereact/button";
-import {Badge } from "primereact/badge";
-import './navbar.css';
-
+import { Button } from "primereact/button";
+import { Badge } from "primereact/badge";
+import "./navbar.css";
+import { Link } from "react-router-dom";
 
 function Navbar() {
   return (
-<>
+    <>
       <nav>
         <div className="nav-info">
           <div className="localization">
@@ -37,37 +37,72 @@ function Navbar() {
               <InputIcon className="pi pi-search"> </InputIcon>
               <InputText v-model="value1" placeholder="بحث عن منتج" />
             </IconField>
-            <Button label="بحث"/>
+            <Button label="بحث" />
           </div>
 
           <div className="shop">
-           <i className="pi pi-heart p-overlay-badge" style={{ fontSize: '2rem', marginLeft:21 }}></i>
-           <i className="pi pi-shopping-bag p-overlay-badge" style={{ fontSize: '2rem', marginLeft:21 }}>
-           <Badge value="0"></Badge>
-           </i>
-
+            <Link>
+              <i
+                className="pi pi-heart p-overlay-badge"
+                style={{ fontSize: "2rem", marginLeft: 21 }}
+              ></i>
+            </Link>
+            <Link>
+              <i
+                className="pi pi-shopping-bag p-overlay-badge"
+                style={{ fontSize: "2rem", marginLeft: 21 }}
+              >
+                <Badge value="0"></Badge>
+              </i>
+            </Link>
           </div>
         </div>
 
         <div className="nav-items">
           <div className="items">
-          <ul>
-              <li>الرئيسية</li>
-              <li>المنتجات</li>
-              <li>الصفحات</li>
-              <li>تواصل معنا</li>
-              <li>معلومات عنا</li>
+            <ul>
+              <Link>
+                <li>الرئيسية</li>
+              </Link>
+              <Link>
+                <li>المنتجات</li>
+              </Link>
+              <Link>
+                <li className="dropdown">
+                  الصفحات
+                  <ul className="dropdown-menu">
+                    <li>
+                      <a href="#page1">المنتجات</a>
+                    </li>
+                    <li>
+                      <a href="#page2">المفضلة</a>
+                    </li>
+                    <li>
+                      <a href="#page3">الطلبات</a>
+                    </li>
+                  </ul>
+                </li>
+              </Link>
+              <Link>
+                <li>تواصل معنا</li>
+              </Link>
+              <Link>
+                <li>معلومات عنا</li>
+              </Link>
             </ul>
           </div>
 
           <div className="phone">
-          <i className="map pi pi-phone" style={{ fontSize: '1.5rem', marginLeft:10 }}></i>
-          <span>026-77-32-66-01</span>
+            <i
+              className="map pi pi-phone"
+              style={{ fontSize: "1.5rem", marginLeft: 10 }}
+            ></i>
+            <span>026-77-32-66-01</span>
           </div>
         </div>
       </nav>
     </>
-  )
+  );
 }
 
-export default Navbar
+export default Navbar;
