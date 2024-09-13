@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import "../App.css";
 import Navbar from "../components/navbar/Navbar";
 import Carousel from "../components/carousel/CarouselComponent";
@@ -6,8 +7,27 @@ import Section from "../components/section/Section";
 import Category from "../components/category/Category";
 import Product from "../components/product/Product";
 import Footer from "../components/footer/footer";
+import { fetchCategories } from "../redux/reducers/category";
+import { fetchProducts } from "../redux/reducers/product";
 
 function Index() {
+  const [page, setPage] = useState(1);
+
+  const dispatch = useDispatch();
+  const { categoryData, catgeoryLoading, categoryError } = useSelector(
+    (state) => state.category
+  );
+  const { productData, productLoading, prodcutError } = useSelector(
+    (state) => state.product
+  );
+  useEffect(() => {
+    dispatch(fetchCategories(page));
+    dispatch(fetchProducts(page));
+  }, [dispatch, page]);
+
+  if (catgeoryLoading) return <p>Loading...</p>;
+  if (categoryError) return <p>Error: {categoryError}</p>;
+
   return (
     <div className="container">
       {/* Start Navbar here */}
@@ -21,36 +41,24 @@ function Index() {
       {/* Displaying all the categories */}
       <Section section_name="الأقسام الأكثر طلبا" section_url="/categories" />
       <div style={categories_style}>
-        <Category />
-        <Category />
-        <Category />
-        <Category />
-        <Category />
-        <Category />
-        <Category />
-        <Category />
-        <Category />
-        <Category />
+        {categoryData.map((item) => {
+          return <Category key={item.id} image={item.image} name={item.name} />;
+        })}
       </div>
 
       {/* */}
-    <Section section_name="المنتجات الأكثر مبيعا" section_url="/products"/>
-    <div style={products_style}>
-        <Product />
-        <Product />
-        <Product />
-        <Product />
-        <Product />
-        <Product />
-        <Product />
-        <Product />
-        <Product />
-        <Product />
-    </div>
+      <Section section_name="المنتجات الأكثر مبيعا" section_url="/products" />
+      <div style={products_style}>
+        {productData.map((item) => {
+          let productImages = JSON.parse(item.images)
+          console.log(productImages[0]);
+                    
+          return <Product key={item.id} name={item.name} price={item.price} solde={item.solde} image={productImages[0]} alt={item.name} />;
+        })}
+      </div>
 
-    {/* The footer */}
-    <Footer />
-
+      {/* The footer */}
+      <Footer />
     </div>
   );
 }
@@ -65,10 +73,11 @@ const categories_style = {
 };
 
 const products_style = {
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "space-around",
-    paddingTop: "20px",
-    paddingBottom: "20px",
-  };
+  display: "flex",
+  flexWrap: "wrap",
+  justifyContent: "space-around",
+  paddingTop: "20px",
+  paddingBottom: "20px",
+};
 export default Index;
+

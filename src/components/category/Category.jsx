@@ -2,11 +2,11 @@ import React from 'react'
 import './Category.css'
 import { Link } from 'react-router-dom'
 
-function Category() {
+function Category({image, name}) {
   return (
     <div className="category-card">
       <Link>
-      <img src="/images/annoounce2.jpg" alt="Category" className="category-image" />
+      <img src={image} alt={name} className="category-image" />
       </Link>
     </div>
   )

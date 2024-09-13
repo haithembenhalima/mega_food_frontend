@@ -46,5 +46,13 @@
   .product-button {
     margin-left: 15px;
   }
+  
+  .product-button span{
+    padding: 2px
+  }
+
+  .tag span{
+    padding: 2px
+  }
  
   
