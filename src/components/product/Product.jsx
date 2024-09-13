@@ -3,23 +3,38 @@ import "./Product.css";
 import { Button } from "primereact/button";
 import { Tag } from "primereact/tag";
 
-function Product({name, price, solde, alt, image}) {
+function Product({ name, price, solde, alt, image, rating }) {
   return (
     <div className="product">
       <div className="product-card">
-        <img
-          src={image}
-          alt={alt}
-          className="product-image"
-        />
+        <img src={image} alt={alt} className="product-image" />
         <div className="product-info">
+          <div className="product-name-rating">
           <h2 className="product-title">{name}</h2>
+          {rating > 0 ? (
+              <i
+                className="pi pi-star-fill p-overlay-badge"
+                style={{ fontSize: "1.25rem", marginRight: 21, color: 'orange',fontWeight:"bold", }}
+              >{rating}</i>
+            ) : null}
+          </div>
+
           <div className="product-price-discount">
             <p className="product-price">{price} د.ج</p>
-            {solde > 0 ? <Tag severity="danger" value="تخفيض" className="tag"> {solde} د.ج</Tag>: null}
+            {solde > 0 ? (
+              <Tag severity="danger" value="تخفيض" className="tag">
+                {" "}
+                {solde} د.ج
+              </Tag>
+            ) : null}
           </div>
           <div>
-            <Button className="product-button" label="أضف إلى السلة" icon="pi pi-shopping-bag" raised />
+            <Button
+              className="product-button"
+              label="أضف إلى السلة"
+              icon="pi pi-shopping-bag"
+              raised
+            />
             <Button
               icon="pi pi-heart"
               rounded

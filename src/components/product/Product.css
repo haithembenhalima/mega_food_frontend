@@ -38,7 +38,7 @@
     
   }
 
-  .product-price-discount{
+  .product-price-discount, .product-name-rating{
     display: flex;
     align-items: baseline;
   }

@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
-import CategoryReducer from './reducers/category'
-import ProductReducer from './reducers/product'
+import CategoryReducer from './category/slice'
+import ProductReducer from './product/slice'
 
 export default configureStore({
   reducer: {

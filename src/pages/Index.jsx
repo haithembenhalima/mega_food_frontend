@@ -7,8 +7,8 @@ import Section from "../components/section/Section";
 import Category from "../components/category/Category";
 import Product from "../components/product/Product";
 import Footer from "../components/footer/footer";
-import { fetchCategories } from "../redux/reducers/category";
-import { fetchProducts } from "../redux/reducers/product";
+import { fetchCategories } from "../redux/category/actions";
+import { fetchProducts } from "../redux/product/actions";
 
 function Index() {
   const [page, setPage] = useState(1);
@@ -17,16 +17,17 @@ function Index() {
   const { categoryData, catgeoryLoading, categoryError } = useSelector(
     (state) => state.category
   );
-  const { productData, productLoading, prodcutError } = useSelector(
+  const { productData, productLoading, productError } = useSelector(
     (state) => state.product
   );
+
   useEffect(() => {
     dispatch(fetchCategories(page));
     dispatch(fetchProducts(page));
   }, [dispatch, page]);
 
-  if (catgeoryLoading) return <p>Loading...</p>;
-  if (categoryError) return <p>Error: {categoryError}</p>;
+  if (catgeoryLoading &&  productLoading) return <p>Loading...</p>;
+  if (categoryError || productError) return <p>Error during fetching</p>;
 
   return (
     <div className="container">
@@ -49,11 +50,13 @@ function Index() {
       {/* */}
       <Section section_name="المنتجات الأكثر مبيعا" section_url="/products" />
       <div style={products_style}>
+        
+        
         {productData.map((item) => {
           let productImages = JSON.parse(item.images)
           console.log(productImages[0]);
                     
-          return <Product key={item.id} name={item.name} price={item.price} solde={item.solde} image={productImages[0]} alt={item.name} />;
+          return <Product key={item.id} name={item.name} price={item.price} solde={item.solde} image={productImages[0]} alt={item.name} rating={item.ratingAverage} />;
         })}
       </div>
 
