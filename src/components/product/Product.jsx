@@ -10,12 +10,19 @@ function Product({ name, price, solde, alt, image, rating }) {
         <img src={image} alt={alt} className="product-image" />
         <div className="product-info">
           <div className="product-name-rating">
-          <h2 className="product-title">{name}</h2>
-          {rating > 0 ? (
+            <h2 className="product-title">{name}</h2>
+            {rating > 0 ? (
               <i
                 className="pi pi-star-fill p-overlay-badge"
-                style={{ fontSize: "1.25rem", marginRight: 21, color: 'orange',fontWeight:"bold", }}
-              >{rating}</i>
+                style={{
+                  fontSize: "1.25rem",
+                  marginRight: 21,
+                  color: "orange",
+                  fontWeight: "bold",
+                }}
+              >
+                {rating}
+              </i>
             ) : null}
           </div>
 

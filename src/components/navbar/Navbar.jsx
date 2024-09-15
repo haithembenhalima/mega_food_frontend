@@ -17,9 +17,9 @@ function Navbar() {
             <p>فرع باب الزوار 1، باب الزوار، العاصمة</p>
           </div>
           <div className="register">
-            <a href="#">الدخول</a>
+            <Link to="/login">الدخول</Link>
             <span>|</span>
-            <a href="#">التسجيل</a>
+            <Link to="/signup">التسجيل</Link>
           </div>
         </div>
 
@@ -35,7 +35,7 @@ function Navbar() {
           <div className="search">
             <IconField iconPosition="right">
               <InputIcon className="pi pi-search"> </InputIcon>
-              <InputText v-model="value1" placeholder="بحث عن منتج" />
+              <InputText v-model="value1" placeholder="بحث..." />
             </IconField>
             <Button label="بحث" />
           </div>
@@ -61,19 +61,16 @@ function Navbar() {
         <div className="nav-items">
           <div className="items">
             <ul>
-              <Link>
+              <Link to="/">
                 <li>الرئيسية</li>
               </Link>
-              <Link>
+              <Link to="/products">
                 <li>المنتجات</li>
               </Link>
               <Link>
                 <li className="dropdown">
                   الصفحات
                   <ul className="dropdown-menu">
-                    <li>
-                      <a href="#page1">المنتجات</a>
-                    </li>
                     <li>
                       <a href="#page2">المفضلة</a>
                     </li>

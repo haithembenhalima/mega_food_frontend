@@ -53,10 +53,8 @@ function Index() {
         
         
         {productData.map((item) => {
-          let productImages = JSON.parse(item.images)
-          console.log(productImages[0]);
                     
-          return <Product key={item.id} name={item.name} price={item.price} solde={item.solde} image={productImages[0]} alt={item.name} rating={item.ratingAverage} />;
+          return <Product key={item.id} name={item.name} price={item.price} solde={item.solde} image={item.images[0]} alt={item.name} rating={item.ratingAverage} />;
         })}
       </div>
 
