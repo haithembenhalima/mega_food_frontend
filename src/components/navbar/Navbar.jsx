@@ -8,6 +8,10 @@ import "./navbar.css";
 import { Link } from "react-router-dom";
 
 function Navbar() {
+  const destroyStorage = () => {
+    localStorage.clear();
+    window.location.href = "/";
+  };
   return (
     <>
       <nav>
@@ -16,11 +20,18 @@ function Navbar() {
             <i className="map pi pi-map-marker"></i>
             <p>فرع باب الزوار 1، باب الزوار، العاصمة</p>
           </div>
-          <div className="register">
-            <Link to="/login">الدخول</Link>
-            <span>|</span>
-            <Link to="/signup">التسجيل</Link>
-          </div>
+          {localStorage.getItem("userId") ? (
+            <div className="register">
+              <Link style={{textDecoration: 'none'}}><i className="pi pi-user"></i> {localStorage.getItem("userName")}</Link>
+              <Link style={{textDecoration: 'none'}} onClick={destroyStorage}><i className="pi pi-sign-out"></i>الخروج </Link>
+            </div>
+          ) : (
+            <div className="register">
+              <Link to="/login">الدخول</Link>
+              <span>|</span>
+              <Link to="/signup">التسجيل</Link>
+            </div>
+          )}
         </div>
 
         <hr />
