@@ -75,7 +75,7 @@ function Login() {
               كلمة المرور
             </label>
           </FloatLabel>
-          <Link style={{ marginTop: 15, fontSize: 14, marginRight: 7 }}>
+          <Link to="/forgot-password" style={{ marginTop: 15, fontSize: 14, marginRight: 7 }}>
             هل نسيت كلمة السر؟
           </Link>
           <Button
