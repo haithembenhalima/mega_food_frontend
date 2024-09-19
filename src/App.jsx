@@ -6,6 +6,9 @@ import Signup from './pages/Signup';
 import ProductPage from "./pages/User/product/ProductPage";
 import ForgotPassword from "./pages/User/forgotPassword/ForgotPassword";
 import VerifyPassword from "./pages/User/forgotPassword/verifyPassword";
+import ResetPassword from "./pages/User/forgotPassword/ResetPassword";
+
+
 function App() {
   return (
     <Router>
@@ -16,6 +19,7 @@ function App() {
         <Route path="/products" element={<ProductPage />}  />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/verify-code" element={<VerifyPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
       </Routes>
     </Router>
   );

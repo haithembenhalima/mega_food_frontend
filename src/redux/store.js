@@ -4,6 +4,8 @@ import ProductReducer from './product/slice'
 import SignupReducer from './signup/slice'
 import LoginReducer from './login/slice'
 import ForgotPasswordReducer from './forgotPassword/slice'
+import VerifyPasswordReducer from './verifyPassword/slice'
+import ResetPasswordReducer from './resetPassword/slice'
 
 export default configureStore({
   reducer: {
@@ -11,6 +13,8 @@ export default configureStore({
     product: ProductReducer,
     signup: SignupReducer,
     login: LoginReducer,
-    forgotPassword: ForgotPasswordReducer,  
+    forgotPassword: ForgotPasswordReducer,
+    verifyPassword: VerifyPasswordReducer,  
+    resetPassword: ResetPasswordReducer,  
   },
 })

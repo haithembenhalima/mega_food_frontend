@@ -9,13 +9,50 @@ import { InputMask } from "primereact/inputmask";
 import { Button } from "primereact/button";
 import { FloatLabel } from "primereact/floatlabel";
 import { Toast } from "primereact/toast";
+import {verifyAction} from '../../../redux/verifyPassword/actions'
+
 
 function VerifyPassword() {
   const toast = useRef(null);
-  const [digit, setDigit] = useState(null);
+  const dispatch = useDispatch();
+  const [resetCode, setResetCode] = useState(null);
+  const { verifytData, verifytLoading, verifytError } = useSelector(
+    (state) => state.verifyPassword
+  );
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+        
+    try {
+      const result = await dispatch(verifyAction({resetCode}));
+
+      if (!verifyAction.fulfilled.match(result)) {
+        console.log(result);
+        
+        toast.current.show({
+          severity: "error",
+          summary: "حدث خطأ",
+          detail: "رمز التأكيد خاطئ",
+          life: 6000,
+        });
+      } else if (verifyAction.fulfilled.match(result)) {
+        localStorage.setItem('resetPasswordStatus', true)
+        window.location.href = "/reset-password";
+        console.log(result);
+        
+  
+      }
+    } catch (error) {
+      console.log(error);
+      toast.current.show({
+        severity: "error",
+        summary: "حدث خطأ",
+        detail: "يرجى المحاولة لاحقا",
+        life: 6000,
+      });
+      
+    }
+
   };
   return (
     <div className="container">
@@ -29,8 +66,8 @@ function VerifyPassword() {
         <form onSubmit={handleSubmit} style={formStyle}>
           <InputMask
             style={{ marginTop: "35px", paddingRight: 30 }}
-            value={digit}
-            onChange={(e) => setDigit(e.target.value)}
+            value={resetCode}
+            onChange={(e) => setResetCode(e.target.value)}
             mask="999999"
             placeholder="XXXXXX"
           />
