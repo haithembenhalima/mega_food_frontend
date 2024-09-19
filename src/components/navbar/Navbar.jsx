@@ -52,13 +52,13 @@ function Navbar() {
           </div>
 
           <div className="shop">
-            <Link>
+            <Link to={localStorage.getItem('role')==="user"? "/wishlist": "/login"}>
               <i
                 className="pi pi-heart p-overlay-badge"
                 style={{ fontSize: "2rem", marginLeft: 21 }}
               ></i>
             </Link>
-            <Link>
+            <Link to={localStorage.getItem('role')==="user"? "/card": "/login"}>
               <i
                 className="pi pi-shopping-bag p-overlay-badge"
                 style={{ fontSize: "2rem", marginLeft: 21 }}

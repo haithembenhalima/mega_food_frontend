@@ -68,6 +68,8 @@ const ProductPage = () => {
       <Navbar />
       {/* End Navbar here */}
 
+      <h2>قائمة المنتجات</h2>
+
       <div className="filters p-d-flex p-ai-center p-jc-between p-mb-4">
         <InputText
           placeholder="بحث عن منتج..."

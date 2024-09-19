@@ -1,0 +1,27 @@
+/* styles.css */
+
+.product-page {
+    padding: 20px;
+}
+
+.filters {
+    margin-bottom: 20px;
+}
+
+.product-card {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.paginator {
+    margin-top: 20px;
+}
+
+.products_style{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding-top: 20px;
+    padding-bottom: 20px
+}
+

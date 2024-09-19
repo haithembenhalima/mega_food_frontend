@@ -7,7 +7,7 @@ import ProductPage from "./pages/User/product/ProductPage";
 import ForgotPassword from "./pages/User/forgotPassword/ForgotPassword";
 import VerifyPassword from "./pages/User/forgotPassword/verifyPassword";
 import ResetPassword from "./pages/User/forgotPassword/ResetPassword";
-
+import Wishlist from "./pages/User/wishlist/Wishlist";
 
 function App() {
   return (
@@ -20,6 +20,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/verify-code" element={<VerifyPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/wishlist" element={<Wishlist />} />
       </Routes>
     </Router>
   );

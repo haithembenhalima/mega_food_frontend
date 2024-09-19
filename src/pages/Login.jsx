@@ -31,11 +31,12 @@ function Login() {
         life: 6000,
       });
     } else if (loginAction.fulfilled.match(result)) {
-      const {id, name , email, token} = result.payload;
+      const {id, name , email, token, role} = result.payload;
       localStorage.setItem("userId", id);
       localStorage.setItem("userName", name);
       localStorage.setItem("userEmail", email);
       localStorage.setItem("userToken", token);
+      localStorage.setItem("role", role);
 
       window.location.href = "/";
 
