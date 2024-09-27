@@ -4,6 +4,7 @@ import { Button } from "primereact/button";
 import { Tag } from "primereact/tag";
 
 function Product({
+  id,
   name,
   price,
   solde,
@@ -11,7 +12,9 @@ function Product({
   image,
   rating,
   isFavorite = false,
+  addingToWishlist
 }) {
+
   return (
     <div className="product">
       <div className="product-card">
@@ -67,6 +70,7 @@ function Product({
                 raised
                 severity="danger"
                 aria-label="Cancel"
+                onClick={() => addingToWishlist(id)}
               />
             )}
           </div>

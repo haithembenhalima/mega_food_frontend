@@ -57,7 +57,7 @@ function Index() {
         {localStorage.getItem("userToken")
           ? productData.map((item) => {
               const isFavorite = wishlistData.some(
-                (wishlistItem) => wishlistItem.id === item.id
+                (wishlistItem) => wishlistItem.ProductId === item.id
               );
               return (
                 <Product
