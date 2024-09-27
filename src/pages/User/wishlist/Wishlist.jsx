@@ -30,7 +30,10 @@ function Wishlist() {
   }, [dispatch, page]);
 
   if (wishlistLoading ) return <p>Loading...</p>;
-  if (wishlistError ) return <p>Error during fetching: {wishlistError}</p>;
+  if (wishlistError ) {
+    localStorage.clear();
+    window.location.href = "/";
+  }
     
   return (
     localStorage.getItem('role') === 'user'?
@@ -54,6 +57,7 @@ function Wishlist() {
               image={product.images[0]}
               alt={product.name}
               rating={product.ratingAverage}
+              isFavorite= {true}
             />
           );
         }) }

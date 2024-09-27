@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./ProductPage.css";
+import { useSelector, useDispatch } from "react-redux";
 import { InputText } from "primereact/inputtext";
 import { Paginator } from "primereact/paginator";
 import { Dropdown } from "primereact/dropdown";
 import { useProducts } from "../../../hooks/useProducts";
+import { fetchWishlist } from "../../../redux/wishlist/actions";
 import Navbar from "../../../components/navbar/Navbar";
 import Footer from "../../../components/footer/Footer";
 import Product from "../../../components/product/Product";
@@ -11,6 +13,7 @@ import Product from "../../../components/product/Product";
 const ProductPage = () => {
   const [layout, setLayout] = useState("grid");
   const [filter, setFilter] = useState("");
+  const dispatch = useDispatch();
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [page, setPage] = useState(1);
   const [rows, setRows] = useState(10);
@@ -53,6 +56,10 @@ const ProductPage = () => {
     )
     .filter((product) => !filterPrices || product.price < filterPrices);
 
+  const { wishlistData, wishlistLoading, wishlistError } = useSelector(
+    (state) => state.wishlist
+  );
+
   const onPageChange = (event) => {
     setPage(event.page + 1); // API uses 1-based indexing
   };
@@ -61,6 +68,10 @@ const ProductPage = () => {
     setRows(event.rows);
     setPage(1); // Reset to page 1 when changing rows per page
   };
+
+  useEffect(() => {
+    dispatch(fetchWishlist(page));
+  }, [dispatch, page]);
 
   return (
     <div className="product-page container">
@@ -101,19 +112,37 @@ const ProductPage = () => {
       </div>
 
       <div className="products_style">
-        {filteredProducts.map((item) => {
-          return (
-            <Product
-              key={item.id}
-              name={item.name}
-              price={item.price}
-              solde={item.solde}
-              image={item.images[0]}
-              alt={item.name}
-              rating={item.ratingAverage}
-            />
-          );
-        })}
+        {localStorage.getItem("userToken")
+          ? filteredProducts.map((item) => {
+              const isFavorite = wishlistData.some(
+                (wishlistItem) => wishlistItem.id === item.id
+              );
+              return (
+                <Product
+                  key={item.id}
+                  name={item.name}
+                  price={item.price}
+                  solde={item.solde}
+                  image={item.images[0]}
+                  alt={item.name}
+                  rating={item.ratingAverage}
+                  isFavorite={isFavorite} 
+                />
+              );
+            })
+          : filteredProducts.map((item) => {
+              return (
+                <Product
+                  key={item.id}
+                  name={item.name}
+                  price={item.price}
+                  solde={item.solde}
+                  image={item.images[0]}
+                  alt={item.name}
+                  rating={item.ratingAverage}
+                />
+              );
+            })}
       </div>
 
       <Paginator

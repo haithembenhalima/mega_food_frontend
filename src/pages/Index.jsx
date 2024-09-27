@@ -26,7 +26,7 @@ function Index() {
     dispatch(fetchProducts(page));
   }, [dispatch, page]);
 
-  if (catgeoryLoading &&  productLoading) return <p>Loading...</p>;
+  if (catgeoryLoading && productLoading) return <p>Loading...</p>;
   if (categoryError || productError) return <p>Error during fetching</p>;
 
   return (
@@ -47,14 +47,21 @@ function Index() {
         })}
       </div>
 
-      {/* */}
+      {/* Display the best selling products */}
       <Section section_name="المنتجات الأكثر مبيعا" section_url="/products" />
       <div style={products_style}>
-        
-        
         {productData.map((item) => {
-                    
-          return <Product key={item.id} name={item.name} price={item.price} solde={item.solde} image={item.images[0]} alt={item.name} rating={item.ratingAverage} />;
+          return (
+            <Product
+              key={item.id}
+              name={item.name}
+              price={item.price}
+              solde={item.solde}
+              image={item.images[0]}
+              alt={item.name}
+              rating={item.ratingAverage}
+            />
+          );
         })}
       </div>
 
@@ -81,4 +88,3 @@ const products_style = {
   paddingBottom: "20px",
 };
 export default Index;
-

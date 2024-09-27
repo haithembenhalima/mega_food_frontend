@@ -3,7 +3,15 @@ import "./Product.css";
 import { Button } from "primereact/button";
 import { Tag } from "primereact/tag";
 
-function Product({ name, price, solde, alt, image, rating }) {
+function Product({
+  name,
+  price,
+  solde,
+  alt,
+  image,
+  rating,
+  isFavorite = false,
+}) {
   return (
     <div className="product">
       <div className="product-card">
@@ -42,14 +50,25 @@ function Product({ name, price, solde, alt, image, rating }) {
               icon="pi pi-shopping-bag"
               raised
             />
-            <Button
-              icon="pi pi-heart"
-              rounded
-              text
-              raised
-              severity="danger"
-              aria-label="Cancel"
-            />
+            {isFavorite ? (
+              <Button
+                icon="pi pi-heart-fill"
+                rounded
+                text
+                raised
+                severity="danger"
+                aria-label="Cancel"
+              />
+            ) : (
+              <Button
+                icon="pi pi-heart"
+                rounded
+                text
+                raised
+                severity="danger"
+                aria-label="Cancel"
+              />
+            )}
           </div>
         </div>
       </div>
