@@ -7,6 +7,7 @@ import Section from "../components/section/Section";
 import Category from "../components/category/Category";
 import Product from "../components/product/Product";
 import Footer from "../components/footer/footer";
+import { fetchWishlist } from "../redux/wishlist/actions";
 import { fetchCategories } from "../redux/category/actions";
 import { fetchProducts } from "../redux/product/actions";
 
@@ -20,10 +21,13 @@ function Index() {
   const { productData, productLoading, productError } = useSelector(
     (state) => state.product
   );
-
+  const { wishlistData, wishlistLoading, wishlistError } = useSelector(
+    (state) => state.wishlist
+  );
   useEffect(() => {
     dispatch(fetchCategories(page));
     dispatch(fetchProducts(page));
+    dispatch(fetchWishlist(page));
   }, [dispatch, page]);
 
   if (catgeoryLoading && productLoading) return <p>Loading...</p>;
@@ -50,19 +54,40 @@ function Index() {
       {/* Display the best selling products */}
       <Section section_name="المنتجات الأكثر مبيعا" section_url="/products" />
       <div style={products_style}>
-        {productData.map((item) => {
-          return (
-            <Product
-              key={item.id}
-              name={item.name}
-              price={item.price}
-              solde={item.solde}
-              image={item.images[0]}
-              alt={item.name}
-              rating={item.ratingAverage}
-            />
-          );
-        })}
+        {localStorage.getItem("userToken")
+          ? productData.map((item) => {
+              const isFavorite = wishlistData.some(
+                (wishlistItem) => wishlistItem.id === item.id
+              );
+              return (
+                <Product
+                  key={item.id}
+                  name={item.name}
+                  price={item.price}
+                  solde={item.solde}
+                  image={item.images[0]}
+                  alt={item.name}
+                  rating={item.ratingAverage}
+                  isFavorite={isFavorite}
+                />
+              );
+            })
+          : productData.map((item) => {
+              const isFavorite = wishlistData.some(
+                (wishlistItem) => wishlistItem.id === item.id
+              );
+              return (
+                <Product
+                  key={item.id}
+                  name={item.name}
+                  price={item.price}
+                  solde={item.solde}
+                  image={item.images[0]}
+                  alt={item.name}
+                  rating={item.ratingAverage}
+                />
+              );
+            })}
       </div>
 
       {/* The footer */}
