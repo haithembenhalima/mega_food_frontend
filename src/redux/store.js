@@ -6,6 +6,7 @@ import LoginReducer from './login/slice'
 import ForgotPasswordReducer from './forgotPassword/slice'
 import VerifyPasswordReducer from './verifyPassword/slice'
 import ResetPasswordReducer from './resetPassword/slice'
+import WishlistReducer from './wishlist/slice'
 
 export default configureStore({
   reducer: {
@@ -16,5 +17,6 @@ export default configureStore({
     forgotPassword: ForgotPasswordReducer,
     verifyPassword: VerifyPasswordReducer,  
     resetPassword: ResetPasswordReducer,  
+    wishlist: WishlistReducer
   },
 })
