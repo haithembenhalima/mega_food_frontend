@@ -9,11 +9,13 @@ import Navbar from "../../../components/navbar/Navbar";
 import Footer from "../../../components/footer/Footer";
 import Product from "../../../components/product/Product";
 import NotFound from "../../../components/notfound/NotFound";
-import {fetchWishlist} from "../../../redux/wishlist/actions"
+import { Toast } from "primereact/toast";
+import {fetchWishlist, deleteFromWishlist} from "../../../redux/wishlist/actions"
 function Wishlist() {
 
   const [page, setPage] = useState(1);
   const [rows, setRows] = useState(10);
+  const toast = React.useRef(null);
   const dispatch = useDispatch();
 
   const { wishlistData, wishlistLoading, wishlistError } = useSelector(
@@ -29,10 +31,33 @@ function Wishlist() {
     dispatch(fetchWishlist(page));
   }, [dispatch, page]);
 
+  const deletingFromWishlist = async (id) => {
+
+    const result = await dispatch(deleteFromWishlist(id));
+
+    console.log(result);
+
+    if (!deleteFromWishlist.fulfilled.match(result)) {
+      toast.current.show({
+        severity: "error",
+        summary: "حدث خطأ، يرجى إعادة المحاولة",
+        life: 6000,
+      });
+    } else if (deleteFromWishlist.fulfilled.match(result)) {
+      toast.current.show({
+        severity: "success",
+        summary: "تمت إزالة المنتج من المفضلة",
+        life: 6000,
+      });
+      
+    }
+  };
+
   if (wishlistLoading ) return <p>Loading...</p>;
   if (wishlistError ) {
     localStorage.clear();
     window.location.href = "/";
+    
   }
     
   return (
@@ -51,6 +76,7 @@ function Wishlist() {
           return (
             <Product
               key={product.id}
+              id={item.id}
               name={product.name}
               price={product.price}
               solde={product.solde}
@@ -58,6 +84,7 @@ function Wishlist() {
               alt={product.name}
               rating={product.ratingAverage}
               isFavorite= {true}
+              deletingFromWishlist={deletingFromWishlist}
             />
           );
         }) }
@@ -72,6 +99,7 @@ function Wishlist() {
       />
 
       {/* Start Footer here */}
+      <Toast ref={toast} />
       <Footer />
       {/* End Footer here */}
     </div>

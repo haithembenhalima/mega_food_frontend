@@ -12,7 +12,8 @@ function Product({
   image,
   rating,
   isFavorite = false,
-  addingToWishlist
+  addingToWishlist,
+  deletingFromWishlist
 }) {
 
   return (
@@ -61,6 +62,7 @@ function Product({
                 raised
                 severity="danger"
                 aria-label="Cancel"
+                onClick={() => deletingFromWishlist(id)}
               />
             ) : (
               <Button

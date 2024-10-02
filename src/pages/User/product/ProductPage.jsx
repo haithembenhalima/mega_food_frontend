@@ -5,7 +5,7 @@ import { InputText } from "primereact/inputtext";
 import { Paginator } from "primereact/paginator";
 import { Dropdown } from "primereact/dropdown";
 import { useProducts } from "../../../hooks/useProducts";
-import { fetchWishlist, addToWishlist } from "../../../redux/wishlist/actions";
+import { fetchWishlist, addToWishlist, deleteFromWishlist } from "../../../redux/wishlist/actions";
 import Navbar from "../../../components/navbar/Navbar";
 import Footer from "../../../components/footer/Footer";
 import Product from "../../../components/product/Product";
@@ -87,8 +87,7 @@ const ProductPage = () => {
     if (!addToWishlist.fulfilled.match(result)) {
       toast.current.show({
         severity: "error",
-        summary: "خطأ في تسجيل الدخول",
-        detail: "يرجى التأكد من البريد الإلتروني أو كلمة المرور",
+        summary: "حدث خطأ، يرجى إعادة المحاولة",
         life: 6000,
       });
     } else if (addToWishlist.fulfilled.match(result)) {
@@ -97,6 +96,8 @@ const ProductPage = () => {
         summary: "تمت إضافة المنتج للمفضلة",
         life: 6000,
       });
+      setTimeout(()=> {window.location.href = "/wishlist" }, 3000)
+      
     }
   };
 
