@@ -58,7 +58,7 @@ function Navbar() {
                 style={{ fontSize: "2rem", marginLeft: 21 }}
               ></i>
             </Link>
-            <Link to={localStorage.getItem('role')==="user"? "/card": "/login"}>
+            <Link to={localStorage.getItem('role')==="user"? "/cart": "/login"}>
               <i
                 className="pi pi-shopping-bag p-overlay-badge"
                 style={{ fontSize: "2rem", marginLeft: 21 }}
