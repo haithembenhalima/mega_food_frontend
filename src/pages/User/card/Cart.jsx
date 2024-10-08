@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Cart.css";
+import { useDispatch, useSelector } from "react-redux";
 import Navbar from "../../../components/navbar/Navbar";
 import Footer from "../../../components/footer/Footer";
 import NotFound from "../../../components/notfound/NotFound";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Tag } from "primereact/tag";
+import {fetchCart} from '../../../redux/cart/actions'
 
 function Cart() {
   const [cartItems, setCartItems] = useState([
@@ -14,6 +16,7 @@ function Cart() {
     { id: 3, name: "Product 3", price: 39.99, quantity: 1 },
   ]);
   const [coupon, setCoupon] = useState("");
+  const dispatch = useDispatch();
 
   const totalAmount = cartItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
@@ -25,7 +28,18 @@ function Cart() {
   const removeItem = (id) => {
     setCartItems(cartItems.filter((item) => item.id !== id));
   };
+  const { cartData, cartLoading, cartError } = useSelector(
+    (state) => state.cart
+  );
 
+
+  useEffect(() => {
+    dispatch(fetchCart(localStorage.getItem('userId')));
+  }, [dispatch]);
+
+  if (cartLoading) return <p>Loading...</p>;
+  if (cartError) return <p>{cartError}</p>;
+  console.log(cartData.CartItem);
   return localStorage.getItem("role") === "user" ? (
     <div className="container">
       {/* Start Navbar here */}
@@ -35,12 +49,12 @@ function Cart() {
       <div className="cart-container">
         <h2>سلّة المشتريات</h2>
         <div className="cart-items">
-          {cartItems.map((item) => (
+          {cartData.CartItem.map((item) => (
             <div key={item.id} className="cart-item">
               <div className="item-details">
-                <h3>اسم المنتج</h3>
+                <h3>{item.Product.name}</h3>
 
-                <p>السعر: {item.price.toFixed(2)} د.ج</p>
+                <p>السعر: {item.Product.price} د.ج</p>
                 <p>الكمية: {item.quantity}</p>
               </div>
               <div className="item-total">
@@ -68,7 +82,7 @@ function Cart() {
         <div className="cart-summary">
           <h3>المبلغ الإجمالي:</h3>
           <Tag severity="success"  className="tag">
-            1200 د.ج
+            {cartData.totalCartPrice} د.ج
           </Tag>
         
           <Button
@@ -86,6 +100,7 @@ function Cart() {
     <div className="container">
       <NotFound />
     </div>
+    
   );
 }
 
