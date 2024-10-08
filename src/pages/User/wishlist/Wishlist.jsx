@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Wishlist.css";
-import { InputText } from "primereact/inputtext";
 import { useDispatch,useSelector } from "react-redux";
 import { Paginator } from "primereact/paginator";
-import { Dropdown } from "primereact/dropdown";
-import { useProducts } from "../../../hooks/useProducts";
 import Navbar from "../../../components/navbar/Navbar";
 import Footer from "../../../components/footer/Footer";
 import Product from "../../../components/product/Product";

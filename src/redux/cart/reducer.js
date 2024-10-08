@@ -1,6 +1,6 @@
 import { fetchCart, addToCart, deleteFromCart } from './actions';
 
-const CartExtraReducers = (builder) => {
+const cartExtraReducers = (builder) => {
   builder
   // Get all the products in the Cart
     .addCase(fetchCart.pending, (state) => {
@@ -45,4 +45,4 @@ const CartExtraReducers = (builder) => {
   });
 };
 
-export default CartExtraReducers;
+export default cartExtraReducers;

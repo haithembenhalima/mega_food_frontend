@@ -1,9 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 // @desc fetch all the Carts
-export const fetchCart = createAsyncThunk('Cart/fetchCart', async (user) => {
+export const fetchCart = createAsyncThunk('Cart/fetchCart', async () => {
   
-  const response = await fetch(`http://localhost:5000/api/v1/cart/${user}`, {
+  const response = await fetch(`http://localhost:5000/api/v1/cart/${localStorage.getItem('userId')}`, {
     method: 'GET',
     headers: {
       'Authorization': `Bearer ${localStorage.getItem('userToken')}`

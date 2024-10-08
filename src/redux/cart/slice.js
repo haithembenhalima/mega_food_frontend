@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import cartExtraReducers from './reducer';
-
+import cartExtraReducers from './reducer'
 const initialState = {
   cartData: [],
   cartLoading: false,

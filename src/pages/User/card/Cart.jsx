@@ -7,39 +7,31 @@ import NotFound from "../../../components/notfound/NotFound";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Tag } from "primereact/tag";
-import {fetchCart} from '../../../redux/cart/actions'
+import { fetchCart } from "../../../redux/cart/actions";
 
 function Cart() {
-  const [cartItems, setCartItems] = useState([
-    { id: 1, name: "Product 1", price: 29.99, quantity: 1 },
-    { id: 2, name: "Product 2", price: 19.99, quantity: 2 },
-    { id: 3, name: "Product 3", price: 39.99, quantity: 1 },
-  ]);
   const [coupon, setCoupon] = useState("");
   const dispatch = useDispatch();
+  
 
-  const totalAmount = cartItems.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0
-  );
-  const discount = coupon === "DISCOUNT10" ? 0.1 * totalAmount : 0;
-  const finalAmount = totalAmount - discount;
-
-  const removeItem = (id) => {
-    setCartItems(cartItems.filter((item) => item.id !== id));
-  };
   const { cartData, cartLoading, cartError } = useSelector(
     (state) => state.cart
   );
 
-
   useEffect(() => {
-    dispatch(fetchCart(localStorage.getItem('userId')));
+    dispatch(fetchCart());
   }, [dispatch]);
 
   if (cartLoading) return <p>Loading...</p>;
-  if (cartError) return <p>{cartError}</p>;
-  console.log(cartData.CartItem);
+  if (cartError) {
+    localStorage.clear();
+    window.location.href = "/";
+  }
+  if (!cartData || !cartData.Cart) {
+    return <p>لا يوجد منتجات لديك في السلة</p>;
+  }
+  console.log(cartData);
+
   return localStorage.getItem("role") === "user" ? (
     <div className="container">
       {/* Start Navbar here */}
@@ -49,27 +41,30 @@ function Cart() {
       <div className="cart-container">
         <h2>سلّة المشتريات</h2>
         <div className="cart-items">
-          {cartData.CartItem.map((item) => (
-            <div key={item.id} className="cart-item">
-              <div className="item-details">
-                <h3>{item.Product.name}</h3>
+          {cartData || cartData.Cart? cartData.CartItem.map((item) => {
 
-                <p>السعر: {item.Product.price} د.ج</p>
-                <p>الكمية: {item.quantity}</p>
+            return (
+              <div key={item.id} className="cart-item">
+                <div className="item-details">
+                  <h3>{item.Product.name}</h3>
+
+                  <p>السعر: {item.Product.price} د.ج</p>
+                  <p>الكمية: {item.quantity}</p>
+                </div>
+                <div className="item-total">
+                  <Button
+                    icon="pi pi-trash"
+                    rounded
+                    text
+                    raised
+                    severity="danger"
+                    aria-label="Cancel"
+                  />
+                </div>
               </div>
-              <div className="item-total">
-                <Button
-                  icon="pi pi-trash"
-                  rounded
-                  text
-                  raised
-                  severity="danger"
-                  aria-label="Cancel"
-                  onClick={() => removeItem(item.id)}
-                />
-              </div>
-            </div>
-          ))}
+            );
+          }): <h2>لا يوجد منتجات لديك في السلة</h2>}
+          
         </div>
         <div className="coupon-section">
           <InputText
@@ -81,10 +76,10 @@ function Cart() {
         </div>
         <div className="cart-summary">
           <h3>المبلغ الإجمالي:</h3>
-          <Tag severity="success"  className="tag">
-            {cartData.totalCartPrice} د.ج
+          <Tag severity="success" className="tag">
+            {cartData.Cart.totalCartPrice} د.ج
           </Tag>
-        
+
           <Button
             className="checkout-button"
             label="تأكيد الطلب"
@@ -100,7 +95,6 @@ function Cart() {
     <div className="container">
       <NotFound />
     </div>
-    
   );
 }
 
