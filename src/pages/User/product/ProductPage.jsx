@@ -5,7 +5,13 @@ import { InputText } from "primereact/inputtext";
 import { Paginator } from "primereact/paginator";
 import { Dropdown } from "primereact/dropdown";
 import { useProducts } from "../../../hooks/useProducts";
-import { fetchWishlist, addToWishlist, deleteFromWishlist } from "../../../redux/wishlist/actions";
+import { Button } from "primereact/button";
+import { Dialog } from "primereact/dialog";
+import {
+  fetchWishlist,
+  addToWishlist,
+  deleteFromWishlist,
+} from "../../../redux/wishlist/actions";
 import Navbar from "../../../components/navbar/Navbar";
 import Footer from "../../../components/footer/Footer";
 import Product from "../../../components/product/Product";
@@ -20,6 +26,9 @@ const ProductPage = () => {
   const [page, setPage] = useState(1);
   const [rows, setRows] = useState(10);
   const [filterPrices, setFilterPrices] = useState(null);
+  const [visible, setVisible] = useState(false);
+  const [selectedQuantity, setSelectedQuantity] = useState(1);
+
 
   const prices = [
     {
@@ -42,6 +51,17 @@ const ProductPage = () => {
       label: "أقل من 250 دج",
       value: 250,
     },
+  ];
+
+  const quantites = [
+    { value: 1 },
+    { value: 2 },
+    { value: 3 },
+    { value: 4 },
+    { value: 5 },
+    { value: 6 },
+    { value: 7 },
+    { value: 8 },
   ];
   const { products, totalRecords, categories } = useProducts(
     page,
@@ -71,6 +91,10 @@ const ProductPage = () => {
     setPage(1); // Reset to page 1 when changing rows per page
   };
 
+  const showDialog = () => {
+    setVisible(true);
+  };
+
   useEffect(() => {
     dispatch(fetchWishlist(page));
   }, [dispatch, page]);
@@ -96,8 +120,9 @@ const ProductPage = () => {
         summary: "تمت إضافة المنتج للمفضلة",
         life: 6000,
       });
-      setTimeout(()=> {window.location.href = "/wishlist" }, 3000)
-      
+      setTimeout(() => {
+        window.location.href = "/wishlist";
+      }, 3000);
     }
   };
 
@@ -157,6 +182,7 @@ const ProductPage = () => {
                   rating={item.ratingAverage}
                   isFavorite={isFavorite}
                   addingToWishlist={addingToWishlist}
+                  showDialog={showDialog}
                 />
               );
             })
@@ -184,6 +210,32 @@ const ProductPage = () => {
         onPageChange={onPageChange}
       />
       <Toast ref={toast} />
+
+      <Dialog
+        header="أضف المنتج إلى السلة"
+        visible={visible}
+        style={{ width: "50vw" }}
+        onHide={() => {
+          if (!visible) return;
+          setVisible(false);
+        }}
+      >
+        <div className="card flex justify-content-center">
+          اختر الكمية: 
+          <Dropdown
+            value={selectedQuantity}
+            onChange={(e) => setSelectedQuantity(e.value)}
+            options={quantites}
+            optionLabel="value"
+            placeholder="اختر الكمية"
+            className="w-full md:w-14rem"
+          />
+          <br />
+          <br />
+          <Button label="إضافة إلى السلة"/>
+        </div>
+      </Dialog>
+
       {/* Start Footer here */}
       <Footer />
       {/* End Footer here */}
