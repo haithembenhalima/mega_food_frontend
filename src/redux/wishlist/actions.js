@@ -52,7 +52,7 @@ export const addToWishlist = createAsyncThunk(
 );
 
 
-// @desc add product to the Wishlist
+// @desc delete product to the Wishlist
 export const deleteFromWishlist = createAsyncThunk(
   'wishlis/deleteFromWishlist',
   async (id, { rejectWithValue }) => {

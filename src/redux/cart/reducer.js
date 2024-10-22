@@ -22,8 +22,12 @@ const cartExtraReducers = (builder) => {
     state.cartError = null;
   })
   .addCase(addToCart.fulfilled, (state, action) => {
-    state.cartLoading = false;
-    state.cartData.push(action.payload);
+    console.log('Before adding:', state.cartData);
+    if (Array.isArray(state.cartData)) {
+      state.cartData.push(action.payload);
+    } else {
+      console.error('cartData is not an array:', state.cartData);
+    }
   })
   .addCase(addToCart.rejected, (state, action) => {
     state.cartLoading = false;
@@ -36,8 +40,12 @@ const cartExtraReducers = (builder) => {
     state.cartError = null;
   })
   .addCase(deleteFromCart.fulfilled, (state, action) => {
-    state.cartLoading = false;
-    state.cartData.pop(action.payload);
+    console.log('Before deleting:', state.cartData);
+    if (Array.isArray(state.cartData)) {
+      state.cartData = state.cartData.filter(item => item.id !== action.payload);
+    } else {
+      console.error('cartData is not an array:', state.cartData);
+    }
   })
   .addCase(deleteFromCart.rejected, (state, action) => {
     state.cartLoading = false;

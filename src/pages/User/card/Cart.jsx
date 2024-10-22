@@ -7,11 +7,14 @@ import NotFound from "../../../components/notfound/NotFound";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Tag } from "primereact/tag";
-import { fetchCart } from "../../../redux/cart/actions";
+import { fetchCart, deleteFromCart } from "../../../redux/cart/actions";
+import { Toast } from "primereact/toast";
+
 
 function Cart() {
   const [coupon, setCoupon] = useState("");
   const dispatch = useDispatch();
+  const toast = React.useRef(null);
   
 
   const { cartData, cartLoading, cartError } = useSelector(
@@ -22,7 +25,31 @@ function Cart() {
     dispatch(fetchCart());
   }, [dispatch]);
 
-  if (cartLoading) return <p>Loading...</p>;
+  const deletingFromCart = async (id) => {
+
+    const result = await dispatch(deleteFromCart(id));
+
+    console.log(result);
+
+    if (!deleteFromCart.fulfilled.match(result)) {
+      toast.current.show({
+        severity: "error",
+        summary: "حدث خطأ، يرجى إعادة المحاولة",
+        life: 6000,
+      });
+    } else if (deleteFromCart.fulfilled.match(result)) {
+      toast.current.show({
+        severity: "success",
+        summary: "تمت إزالة المنتج من السلة",
+        life: 6000,
+      });
+    }
+
+    window.location.reload();
+  };
+
+
+  //if (cartLoading) return <p>Loading...</p>;
   if (cartError) {
     localStorage.clear();
     window.location.href = "/";
@@ -59,6 +86,7 @@ function Cart() {
                     raised
                     severity="danger"
                     aria-label="Cancel"
+                    onClick={()=> deletingFromCart(item.id)}
                   />
                 </div>
               </div>
@@ -89,6 +117,7 @@ function Cart() {
       </div>
 
       <Footer />
+      <Toast ref={toast} />
       {/* End Footer here */}
     </div>
   ) : (

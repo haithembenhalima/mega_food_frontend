@@ -82,3 +82,4 @@ export const deleteFromCart = createAsyncThunk(
     }
   }
 );
+
