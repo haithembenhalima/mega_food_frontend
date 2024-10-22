@@ -7,6 +7,9 @@ function CarouselComponent() {
     "/images/annoounce1.jpg",
     "/images/annoounce2.jpg",
     "/images/annoounce3.jpg",
+    "/images/annoounce4.jpg",
+    "/images/annoounce5.jpg",
+    "/images/annoounce6.jpg",
     // Add more image paths here
   ];
   const [currentIndex, setCurrentIndex] = useState(0);
