@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { IconField } from "primereact/iconfield";
 import { InputIcon } from "primereact/inputicon";
 import { InputText } from "primereact/inputtext";
@@ -6,12 +6,30 @@ import { Button } from "primereact/button";
 import { Badge } from "primereact/badge";
 import "./navbar.css";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCart } from "../../redux/cart/actions";
+
 
 function Navbar() {
   const destroyStorage = () => {
     localStorage.clear();
     window.location.href = "/";
   };
+  const dispatch = useDispatch();
+  const { cartData, cartLoading, cartError } = useSelector(
+    (state) => state.cart
+  );
+
+  
+  useEffect(() => {
+    dispatch(fetchCart());
+  }, [dispatch]);
+
+  if (localStorage.getItem('role')==="user" && (!cartData || !cartData.Cart)) {
+    return <p>لا يوجد منتجات لديك في السلة</p>;
+  }
+  console.log(cartData);
+  
   return (
     <>
       <nav>
@@ -63,7 +81,7 @@ function Navbar() {
                 className="pi pi-shopping-bag p-overlay-badge"
                 style={{ fontSize: "2rem", marginLeft: 21 }}
               >
-                <Badge value="0"></Badge>
+                <Badge value={localStorage.getItem('role')==="user"? cartData.CartItem.length : ""}></Badge>
               </i>
             </Link>
           </div>

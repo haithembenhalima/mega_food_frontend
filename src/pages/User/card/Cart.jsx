@@ -62,7 +62,7 @@ function Cart() {
   return localStorage.getItem("role") === "user" ? (
     <div className="container">
       {/* Start Navbar here */}
-      <Navbar />
+      <Navbar/>
       {/* End Navbar here */}
 
       <div className="cart-container">
