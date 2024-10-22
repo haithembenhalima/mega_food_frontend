@@ -16,6 +16,7 @@ import Navbar from "../../../components/navbar/Navbar";
 import Footer from "../../../components/footer/Footer";
 import Product from "../../../components/product/Product";
 import { Toast } from "primereact/toast";
+import { addToCart } from "../../../redux/cart/actions";
 
 const ProductPage = () => {
   const [layout, setLayout] = useState("grid");
@@ -28,6 +29,7 @@ const ProductPage = () => {
   const [filterPrices, setFilterPrices] = useState(null);
   const [visible, setVisible] = useState(false);
   const [selectedQuantity, setSelectedQuantity] = useState(1);
+  const [id, setId] = useState(null);
 
 
   const prices = [
@@ -81,6 +83,9 @@ const ProductPage = () => {
   const { wishlistData, wishlistLoading, wishlistError } = useSelector(
     (state) => state.wishlist
   );
+  const { cartData, cartLoading, cartError } = useSelector(
+    (state) => state.cart
+  );
 
   const onPageChange = (event) => {
     setPage(event.page + 1); // API uses 1-based indexing
@@ -91,9 +96,11 @@ const ProductPage = () => {
     setPage(1); // Reset to page 1 when changing rows per page
   };
 
-  const showDialog = () => {
+  const showDialog = (id) => {
     setVisible(true);
+    setId(id);
   };
+
 
   useEffect(() => {
     dispatch(fetchWishlist(page));
@@ -122,6 +129,34 @@ const ProductPage = () => {
       });
       setTimeout(() => {
         window.location.href = "/wishlist";
+      }, 3000);
+    }
+  };
+
+  const addingToCart = async () => {
+    const ProductData = {
+      UserId: Number(localStorage.getItem("userId")),
+      ProductId: id,
+      quantity: selectedQuantity
+    };
+    const result = await dispatch(addToCart(ProductData));
+
+    console.log(result);
+
+    if (!addToCart.fulfilled.match(result)) {
+      toast.current.show({
+        severity: "error",
+        summary: "حدث خطأ، يرجى إعادة المحاولة",
+        life: 6000,
+      });
+    } else if (addToCart.fulfilled.match(result)) {
+      toast.current.show({
+        severity: "success",
+        summary: "تمت إضافة المنتج للسلة",
+        life: 6000,
+      });
+      setTimeout(() => {
+        window.location.href = "/cart";
       }, 3000);
     }
   };
@@ -232,7 +267,7 @@ const ProductPage = () => {
           />
           <br />
           <br />
-          <Button label="إضافة إلى السلة"/>
+          <Button label="إضافة إلى السلة" onClick={()=> addingToCart()}/>
         </div>
       </Dialog>
 

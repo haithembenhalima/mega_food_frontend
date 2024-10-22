@@ -14,7 +14,8 @@ function Product({
   isFavorite = false,
   addingToWishlist,
   deletingFromWishlist,
-  showDialog
+  showDialog,
+  getId
 }) {
 
   return (
@@ -54,7 +55,7 @@ function Product({
               label="أضف إلى السلة"
               icon="pi pi-shopping-bag"
               raised
-              onClick={() => showDialog()}
+              onClick={() => showDialog(id)}
             />
             {isFavorite ? (
               <Button
