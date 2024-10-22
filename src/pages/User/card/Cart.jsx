@@ -8,6 +8,7 @@ import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Tag } from "primereact/tag";
 import { fetchCart, deleteFromCart } from "../../../redux/cart/actions";
+import { applyCoupon } from "../../../redux/coupon/actions";
 import { Toast } from "primereact/toast";
 
 
@@ -46,6 +47,31 @@ function Cart() {
     }
 
     window.location.reload();
+  };
+
+  const applyingCoupon = async () => {
+    const couponData= {
+      coupon: coupon,
+      UserId: localStorage.getItem('userId'),
+    }
+    const result = await dispatch(applyCoupon(couponData));
+
+    console.log(result);
+
+    if (!applyCoupon.fulfilled.match(result)) {
+      toast.current.show({
+        severity: "error",
+        summary: "كود الخصم غير صحيح، أو منتهي الصلاحية",
+        life: 6000,
+      });
+    } else if (applyCoupon.fulfilled.match(result)) {
+      toast.current.show({
+        severity: "success",
+        summary: "تم تطبيق كود الخصم بنجاح",
+        life: 6000,
+      });
+    }
+
   };
 
 
@@ -99,8 +125,9 @@ function Cart() {
             className="coupon-input"
             v-model="value1"
             placeholder="أدخل كوبونك"
+            onChange={(e) => setCoupon(e.target.value)}
           />
-          <Button label="تفعيل الكوبون" />
+          <Button label="تفعيل الكوبون" onClick={()=>applyingCoupon()}/>
         </div>
         <div className="cart-summary">
           <h3>المبلغ الإجمالي:</h3>
