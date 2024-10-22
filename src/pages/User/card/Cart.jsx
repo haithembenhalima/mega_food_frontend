@@ -6,9 +6,12 @@ import Footer from "../../../components/footer/Footer";
 import NotFound from "../../../components/notfound/NotFound";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
+import { Dialog } from "primereact/dialog";
+import { SelectButton } from 'primereact/selectbutton';
 import { Tag } from "primereact/tag";
 import { fetchCart, deleteFromCart } from "../../../redux/cart/actions";
 import { applyCoupon } from "../../../redux/coupon/actions";
+import { onlinePayment } from "../../../redux/payment/actions";
 import { Toast } from "primereact/toast";
 
 
@@ -16,10 +19,18 @@ function Cart() {
   const [coupon, setCoupon] = useState("");
   const dispatch = useDispatch();
   const toast = React.useRef(null);
+  const [visible, setVisible] = useState(false);
+  const options = ['دفع إلكتروني', 'دفع عند الإستلام'];
+  const [value, setValue] = useState(options[0]);
+
   
 
   const { cartData, cartLoading, cartError } = useSelector(
     (state) => state.cart
+  );
+
+  const { paymentData, paymentLoading, paymentError } = useSelector(
+    (state) => state.payment
   );
 
   useEffect(() => {
@@ -73,6 +84,38 @@ function Cart() {
     }
 
   };
+
+  const handleOnlinePayment = async () => {
+    const cartId = cartData.Cart.id; // Make sure this is defined
+    console.log('Cart ID:', cartId); // Log the cartId to check if it's defined
+  
+    if (!cartId) {
+      // If cartId is undefined, handle the error
+      toast.current.show({
+        severity: "error",
+        summary: "Cart ID is not defined.",
+        life: 6000,
+      });
+      return;
+    }
+  
+    const result = await dispatch(onlinePayment(cartId));
+  
+    console.log('Dispatch result:', result);
+  
+    if (onlinePayment.fulfilled.match(result)) {
+      const paymentUrl = result.payload.url; // Extract the URL from the payload
+      window.location.href = paymentUrl; // Redirect to payment URL
+    } else {
+      toast.current.show({
+        severity: "error",
+        summary: "حدث خطأ يرجى إعادة المحاولة لاحقا",
+        life: 6000,
+      });
+    }
+  };
+  
+  
 
 
   //if (cartLoading) return <p>Loading...</p>;
@@ -139,9 +182,29 @@ function Cart() {
             className="checkout-button"
             label="تأكيد الطلب"
             size="large"
+            onClick={()=>setVisible(true)}
           />
         </div>
       </div>
+
+      
+      <Dialog
+        header="اختر طريقة الدفع"
+        visible={visible}
+        style={{ width: "50vw" }}
+        onHide={() => {
+          if (!visible) return;
+          setVisible(false);
+        }}
+      >
+        <div className="card flex justify-content-center">
+        <SelectButton value={value} onChange={(e) => setValue(e.value)} options={options} />
+
+          <br />
+          <br />
+          <Button style={{background:"green", color:"white" , width:"100%"}} label="تأكيد الطلب" onClick={()=> handleOnlinePayment()}/>
+        </div>
+      </Dialog>
 
       <Footer />
       <Toast ref={toast} />

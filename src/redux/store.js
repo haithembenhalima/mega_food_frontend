@@ -8,6 +8,9 @@ import VerifyPasswordReducer from './verifyPassword/slice'
 import ResetPasswordReducer from './resetPassword/slice'
 import WishlistReducer from './wishlist/slice'
 import CartReducer from './cart/slice'
+import CouponReducer from './coupon/slice'
+import PaymentReducer from './payment/slice'
+
 
 export default configureStore({
   reducer: {
@@ -20,5 +23,7 @@ export default configureStore({
     resetPassword: ResetPasswordReducer,  
     wishlist: WishlistReducer,
     cart: CartReducer,  
+    coupon: CouponReducer,
+    payment: PaymentReducer,
   },
 })
