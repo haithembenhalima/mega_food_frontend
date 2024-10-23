@@ -1,8 +1,7 @@
-# React + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Overview
+Is the front-end side for "Mega Food Restaurant" especially for the food delivery in algeria, 
+Their services are currently concentrated in `Algiers` and `Boumerdes` and `Tipaza` , 
+This project is designed to provide a comprehensive solution for managing food delivery services. 
+It encompasses everything from food listings to customer orders to online payement and delivery logistics.
+Through my work on this project, I have focused on improving performance and effectiveness for the food delivery
+services such as: Ordering synchronization and E-payement solutions in algeria.<br><br>
