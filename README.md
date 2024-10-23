@@ -46,3 +46,6 @@ You can now access to the project on localhost with: `http://localhost:5173/`
   <li>Redux</li>
 </ul>
 
+# License
+Project Rights Reserved for The `MegaFood Team`
+
