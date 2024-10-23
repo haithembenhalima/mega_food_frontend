@@ -37,3 +37,12 @@ npm run dev
 ```
 
 You can now access to the project on localhost with: `http://localhost:5173/`
+
+# Technologies
+
+<ul>
+  <li>React.js + Vite</li>
+  <li>PrimeReact</li>
+  <li>Redux</li>
+</ul>
+
