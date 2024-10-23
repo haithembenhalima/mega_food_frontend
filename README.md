@@ -33,5 +33,7 @@ npm install
 3. Run the project:
 
 ```
-npm  run dev
+npm run dev
 ```
+
+You can now access to the project on localhost with: `http://localhost:5173/`
